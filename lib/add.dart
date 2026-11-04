@@ -17,7 +17,7 @@ class _AddState extends State<Add> {
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          "Student List",
+          "Student Lists",
           style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
