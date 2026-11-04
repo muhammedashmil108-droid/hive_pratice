@@ -12,6 +12,7 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
+  final box = Hive.box('studentBox');
   final usernameController = TextEditingController();
   final ageController = TextEditingController();
 
@@ -59,12 +60,12 @@ class _HomeState extends State<Home> {
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () async {
-                    Map<String, dynamic> studentData = {
+                    Map<String, dynamic> studentBox = {
                       "name": usernameController.text,
                       "age": int.tryParse(ageController.text) ?? 0,
                     };
-                    final box = Hive.box('children');
-                    await box.add(studentData);
+                    final box = Hive.box('studentBox');
+                    await box.add(studentBox);
                     if (mounted) {
                       Navigator.push(
                         context,
