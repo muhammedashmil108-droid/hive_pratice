@@ -13,6 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   final box = Hive.box('studentBox');
+
   final usernameController = TextEditingController();
   final ageController = TextEditingController();
 
@@ -73,6 +74,7 @@ class _HomeState extends State<Home> {
                       );
                     }
                   },
+
                   child: Text("Submit"),
                 ),
               ],

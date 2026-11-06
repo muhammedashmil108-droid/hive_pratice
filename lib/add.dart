@@ -31,6 +31,7 @@ class _AddState extends State<Add> {
           icon: Icon(Icons.arrow_back),
         ),
       ),
+
       body: Column(
         children: [
           SizedBox(height: 30),
@@ -38,21 +39,34 @@ class _AddState extends State<Add> {
           Expanded(
             child: ValueListenableBuilder(
               valueListenable: studentBox.listenable(),
+
               builder: (context, box, child) {
-                final Students = box.values.toList();
+                final students = box.values.toList();
 
                 return ListView.builder(
-                  itemCount: Students.length,
+                  itemCount: students.length,
+
                   itemBuilder: (context, index) {
-                    final student = Students[index];
+                    final student = students[index];
 
                     return Card(
                       margin: EdgeInsets.all(10),
                       elevation: 5,
+
                       child: ListTile(
                         leading: Icon(Icons.person),
+
                         title: Text("${student["name"]}"),
+
                         subtitle: Text("${student["age"]}"),
+
+                        trailing: IconButton(
+                          onPressed: () async {
+                            // Delete student from Hive Box
+                            await studentBox.deleteAt(index);
+                          },
+                          icon: Icon(Icons.delete, color: Colors.red),
+                        ),
                       ),
                     );
                   },
