@@ -4,6 +4,11 @@ import 'add.dart';
 
 import 'package:hive_flutter/hive_flutter.dart';
 
+import 'model/student_model.dart';
+import 'service/student_service.dart';
+
+final StudentService studentService = StudentService();
+
 class Home extends StatefulWidget {
   const Home({super.key});
 
@@ -61,13 +66,17 @@ class _HomeState extends State<Home> {
                 SizedBox(height: 30),
                 ElevatedButton(
                   onPressed: () async {
-                    Map<String, dynamic> studentBox = {
-                      "name": usernameController.text,
-                      "age": int.tryParse(ageController.text) ?? 0,
-                    };
-                    final box = Hive.box('studentBox');
-                    await box.add(studentBox);
+                    StudentModel student = StudentModel(
+                      name: usernameController.text.trim(),
+                      age: int.tryParse(ageController.text.trim()) ?? 0,
+                    );
+
+                    await studentService.addStudent(student);
+
                     if (mounted) {
+                      usernameController.clear();
+                      ageController.clear();
+
                       Navigator.push(
                         context,
                         MaterialPageRoute(builder: (context) => Add()),

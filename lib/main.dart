@@ -13,6 +13,8 @@ void main() async {
 }
 
 class Student extends StatelessWidget {
+  const Student({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

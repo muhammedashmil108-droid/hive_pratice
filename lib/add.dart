@@ -2,6 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_pratice/home.dart';
 
+import 'model/student_model.dart';
+import 'service/student_service.dart';
+
+final StudentService studentService = StudentService();
+final Box studentBox = Hive.box('studentBox');
+
 class Add extends StatefulWidget {
   const Add({super.key});
 
@@ -41,7 +47,7 @@ class _AddState extends State<Add> {
               valueListenable: studentBox.listenable(),
 
               builder: (context, box, child) {
-                final students = box.values.toList();
+                final students = studentService.getStudents();
 
                 return ListView.builder(
                   itemCount: students.length,
@@ -56,14 +62,13 @@ class _AddState extends State<Add> {
                       child: ListTile(
                         leading: Icon(Icons.person),
 
-                        title: Text("${student["name"]}"),
-
-                        subtitle: Text("${student["age"]}"),
+                        title: Text(student.name),
+                        subtitle: Text(student.age.toString()),
 
                         trailing: IconButton(
                           onPressed: () async {
                             // Delete student from Hive Box
-                            await studentBox.deleteAt(index);
+                            await studentService.deleteStudent(index);
                           },
                           icon: Icon(Icons.delete, color: Colors.red),
                         ),
