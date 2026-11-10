@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:hive_pratice/home.dart';
 
-import 'model/student_model.dart';
 import 'service/student_service.dart';
 
 final StudentService studentService = StudentService();

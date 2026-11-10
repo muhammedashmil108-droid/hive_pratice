@@ -35,7 +35,7 @@ class _HomeState extends State<Home> {
       appBar: AppBar(
         title: Text(
           "Student App",
-          style: TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+          style: TextStyle(fontSize: 26, fontWeight: FontWeight.bold),
         ),
         centerTitle: true,
       ),
@@ -53,7 +53,7 @@ class _HomeState extends State<Home> {
                     ),
                   ),
                 ),
-                SizedBox(height: 10),
+                SizedBox(height: 12),
                 TextField(
                   controller: ageController,
                   decoration: InputDecoration(
