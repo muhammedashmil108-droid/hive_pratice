@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:hive_flutter/adapters.dart';
 import 'package:hive_pratice/model/student_model.dart';
 import 'package:hive_pratice/service/student_service.dart';
 import 'add.dart';
@@ -12,6 +13,7 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
 final StudentService studentService = StudentService();
+
 
 final usernameController = TextEditingController();
 final ageController = TextEditingController();
@@ -80,14 +82,41 @@ ageController.clear();
   add();
 
  
-    Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => Add()),
-    );
+    // Navigator.push(
+    //   context,
+    //   MaterialPageRoute(builder: (context) => Add()),
+    // );
 
 },
                   child: Text("Submit"),
                 ),
+                SizedBox(height: 20,),
+
+                Expanded(
+                  child: ValueListenableBuilder(
+                    valueListenable:studentService.studentBox.listenable() ,
+                     builder: (context,box,child){
+                      final student=box.values.toList();
+
+                      return ListView.builder(
+                        itemCount: student.length,
+                        itemBuilder: (context,index){
+                          final students = student[index];
+
+                          return Card(
+                            elevation: 4,
+                            child: ListTile(
+                           title: Text(students.name),
+                           subtitle: Text(students.age.toString()),
+                           trailing: IconButton(onPressed: ()async{
+                          await studentService.deleteStudent(index);
+                           }, icon: Icon(Icons.delete),color: Colors.red,),
+                            ),
+                          );
+                        }
+                        ); 
+                     }
+                     ))
               ],
             ),
           ),
