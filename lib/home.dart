@@ -1,13 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:hive_pratice/model/student_model.dart';
+import 'package:hive_pratice/service/student_service.dart';
 import 'add.dart';
-
-import 'package:hive_flutter/hive_flutter.dart';
-
-import 'model/student_model.dart';
-import 'service/student_service.dart';
-
-final StudentService studentService = StudentService();
 
 class Home extends StatefulWidget {
   const Home({super.key});
@@ -17,11 +11,26 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final box = Hive.box('studentBox');
+final StudentService studentService = StudentService();
 
-  final usernameController = TextEditingController();
-  final ageController = TextEditingController();
+final usernameController = TextEditingController();
+final ageController = TextEditingController();
 
+void add()async{
+  String name = usernameController.text.trim();
+  int? age = int.tryParse(ageController.text.trim());
+
+if(name.isEmpty || age == null){
+  return;
+}
+
+Student student =Student(name: name, age: age);
+await studentService.addStudent(student);
+usernameController.clear();
+ageController.clear();
+
+
+}
   @override
   void dispose() {
     usernameController.dispose();
@@ -65,25 +74,18 @@ class _HomeState extends State<Home> {
                 ),
                 SizedBox(height: 30),
                 ElevatedButton(
-                  onPressed: () async {
-                    StudentModel student = StudentModel(
-                      name: usernameController.text.trim(),
-                      age: int.tryParse(ageController.text.trim()) ?? 0,
-                    );
+                 onPressed: () async {
 
-                    await studentService.addStudent(student);
 
-                    if (mounted) {
-                      usernameController.clear();
-                      ageController.clear();
+  add();
 
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => Add()),
-                      );
-                    }
-                  },
+ 
+    Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => Add()),
+    );
 
+},
                   child: Text("Submit"),
                 ),
               ],
