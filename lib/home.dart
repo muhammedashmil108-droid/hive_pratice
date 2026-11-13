@@ -52,74 +52,68 @@ ageController.clear();
       ),
       body: Column(
         children: [
-          Center(
-            child: Column(
-              children: [
-                TextField(
-                  controller: usernameController,
-                  decoration: InputDecoration(
-                    hintText: "Enter your name",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 12),
-                TextField(
-                  controller: ageController,
-                  decoration: InputDecoration(
-                    hintText: "Enter your age",
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                ),
-                SizedBox(height: 30),
-                ElevatedButton(
-                 onPressed: () async {
-
-
-  add();
-
- 
-    // Navigator.push(
-    //   context,
-    //   MaterialPageRoute(builder: (context) => Add()),
-    // );
-
-},
-                  child: Text("Submit"),
-                ),
-              
-
-                Expanded(
-                  child: ValueListenableBuilder(
-                    valueListenable:studentService.studentBox.listenable() ,
-                     builder: (context,box,child){
-                      final student=box.values.toList();
-
-                      return ListView.builder(
-                        itemCount: student.length,
-                        itemBuilder: (context,index){
-                          final students = student[index];
-
-                          return Card(
-                            elevation: 4,
-                            child: ListTile(
-                           title: Text(students.name),
-                           subtitle: Text(students.age.toString()),
-                           trailing: IconButton(onPressed: ()async{
-                          await studentService.deleteStudent(index);
-                           }, icon: Icon(Icons.delete),color: Colors.red,),
-                            ),
-                          );
-                        }
-                        ); 
-                     }
-                     ))
-              ],
+          TextField(
+            controller: usernameController,
+            decoration: InputDecoration(
+              hintText: "Enter your name",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
             ),
           ),
+          SizedBox(height: 12),
+          TextField(
+            controller: ageController,
+            decoration: InputDecoration(
+              hintText: "Enter your age",
+              border: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(10),
+              ),
+            ),
+          ),
+          SizedBox(height: 30),
+          ElevatedButton(
+           onPressed: () async {
+                    
+                    
+                      add();
+                    
+                     
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => Add()),
+          // );
+                    
+                    },
+            child: Text("Submit"),
+          ),
+              SizedBox(height: 20,) ,       
+                    
+          Expanded(
+            child: ValueListenableBuilder(
+              valueListenable:studentService.studentBox.listenable() ,
+               builder: (context,box,child){
+                final student=box.values.toList();
+                    
+                return ListView.builder(
+                  itemCount: student.length,
+                  itemBuilder: (context,index){
+                    final students = student[index];
+                    
+                    return Card(
+                      elevation: 4,
+                      child: ListTile(
+                     title: Text(students.name),
+                     subtitle: Text(students.age.toString()),
+                     trailing: IconButton(onPressed: ()async{
+                    await studentService.deleteStudent(index);
+                     }, icon: Icon(Icons.delete),color: Colors.red,),
+                      ),
+                    );
+                  }
+                  ); 
+               }
+               )),
         ],
       ),
     );
