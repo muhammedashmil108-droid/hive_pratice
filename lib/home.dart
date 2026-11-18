@@ -85,7 +85,7 @@ ageController.clear();
           // );
                     
                     },
-            child: Text("SUBMIT"),
+            child: Text("Submit"),
           ),
               SizedBox(height: 20,) ,       
                     
